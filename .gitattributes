@@ -1,0 +1,20 @@
+* text=auto eol=lf
+
+*.blade.php diff=html
+*.css diff=css
+*.html diff=html
+*.md diff=markdown
+*.php diff=php
+*.ts diff=javascript
+
+# Medien niemals als Text behandeln
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.webp binary
+*.avif binary
+*.mp4 binary
+*.mov binary
+*.woff2 binary
+
+/.github export-ignore

@@ -1,0 +1,843 @@
+/*
+ * Bahnseite: Medienbereich (Street-View-Viewer), Seitenpanel, Messmarken.
+ * Desktop: Viewer links, Panel rechts, Scorecard-Leiste unten. Handy: Viewer oben, Panel darunter, Leiste unten fixiert.
+ */
+.page-hole {
+    background: var(--color-surface);
+}
+
+.hole-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "stage"
+        "panel"
+        "strip";
+}
+
+.hole-stage {
+    grid-area: stage;
+    position: relative;
+    background: var(--color-ink);
+    height: 62vh;
+    min-height: 20rem;
+}
+
+.hole-panel {
+    grid-area: panel;
+    padding: var(--space-6) var(--gutter) calc(var(--strip-height) + var(--space-8));
+    background: var(--color-surface);
+}
+
+.hole-layout__strip {
+    grid-area: strip;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 25;
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+@media (min-width: 64rem) {
+    .hole-layout {
+        grid-template-columns: minmax(0, 1fr) 24rem;
+        grid-template-rows: calc(100vh - var(--header-height) - var(--strip-height)) var(--strip-height);
+        grid-template-areas:
+            "stage panel"
+            "strip strip";
+        height: calc(100vh - var(--header-height));
+    }
+
+    .hole-stage {
+        height: auto;
+    }
+
+    .hole-panel {
+        overflow-y: auto;
+        border-left: 1px solid var(--color-line);
+        padding-bottom: var(--space-8);
+    }
+
+    .hole-layout__strip {
+        position: static;
+    }
+}
+
+/* ---------- Medienbereich ---------- */
+.stage-panel {
+    position: absolute;
+    inset: 0;
+}
+
+.stage-panel[hidden] {
+    display: none;
+}
+
+/* Modus „Plan“: Bahngrafik des Clubs mit Messmarken */
+.stage-panel--plan {
+    overflow: auto;
+    display: grid;
+    place-items: center;
+    padding: 4rem var(--space-3) var(--space-3);
+    background: var(--color-paper);
+}
+
+.plan {
+    margin: 0;
+    max-height: 100%;
+}
+
+.plan__canvas {
+    position: relative;
+    display: inline-block;
+}
+
+.plan__canvas img {
+    max-height: calc(62vh - 5rem);
+    width: auto;
+    max-width: 100%;
+}
+
+@media (min-width: 64rem) {
+    .plan__canvas img {
+        max-height: calc(100vh - var(--header-height) - var(--strip-height) - 6rem);
+    }
+}
+
+.plan__pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border: 0;
+    background: none;
+    padding: 0;
+}
+
+.flyover {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--color-ink);
+    display: block;
+}
+
+.viewer {
+    position: absolute;
+    inset: 0;
+}
+
+/* ---------- Überflug mit Haltepunkten (public/js/flyover.js) ---------- */
+.flyover-ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.flyover-ui > * {
+    pointer-events: auto;
+}
+
+.flyover-card {
+    position: absolute;
+    top: 4rem;
+    left: var(--space-3);
+    max-width: 17rem;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--color-dark-glass);
+    backdrop-filter: blur(8px);
+    color: var(--color-on-dark);
+    border-left: 3px solid var(--color-signal);
+    cursor: pointer;
+}
+
+.flyover-card p {
+    margin: 0 0 0.15em;
+    font-size: var(--text-sm);
+}
+
+.flyover-card__type {
+    font-size: var(--text-xs) !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-on-dark-muted);
+}
+
+.flyover-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg) !important;
+}
+
+.flyover-stop {
+    position: absolute;
+    left: 50%;
+    bottom: 7.5rem;
+    transform: translateX(-50%);
+    width: min(24rem, calc(100% - 2 * var(--space-4)));
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    background: var(--color-dark-glass);
+    backdrop-filter: blur(10px);
+    color: var(--color-on-dark);
+    text-align: center;
+}
+
+.flyover-stop[hidden],
+.flyover-card[hidden] {
+    display: none;
+}
+
+.flyover-stop p {
+    margin: 0;
+}
+
+.flyover-stop__eyebrow {
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-on-dark-muted);
+}
+
+.flyover-stop__label {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+}
+
+.flyover-stop__distance {
+    font-size: var(--text-sm);
+    color: var(--color-on-dark-muted);
+    min-height: 1.2em;
+}
+
+.flyover-stop__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.button--ghost {
+    background: transparent;
+    color: var(--color-on-dark);
+    border-color: var(--color-on-dark-muted);
+}
+
+.button--ghost:hover {
+    color: var(--color-on-dark);
+    border-color: var(--color-on-dark);
+}
+
+.button--ghost[hidden] {
+    display: none;
+}
+
+.flyover-bar {
+    position: absolute;
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: 3.25rem;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-dark-glass);
+    backdrop-filter: blur(8px);
+    color: var(--color-on-dark);
+}
+
+.flyover-play {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    cursor: pointer;
+}
+
+.flyover-track {
+    position: relative;
+    flex: 1;
+    height: 0.375rem;
+    border-radius: var(--radius-pill);
+    background: rgb(244 241 234 / 0.25);
+    cursor: pointer;
+}
+
+.flyover-track::before {
+    /* größere Trefferfläche für Finger */
+    content: "";
+    position: absolute;
+    inset: -0.75rem 0;
+}
+
+.flyover-track__progress {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 0;
+    border-radius: inherit;
+    background: var(--color-signal);
+}
+
+.flyover-track__tick {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.flyover-track__tick--stop {
+    width: 3px;
+    height: 1rem;
+    border-radius: 2px;
+    background: var(--color-paper);
+}
+
+.flyover-track__tick--cue {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-sand);
+}
+
+.flyover-toggle {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-xs);
+    color: var(--color-on-dark-muted);
+    cursor: pointer;
+}
+
+.flyover-chips {
+    position: absolute;
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: var(--space-3);
+    display: flex;
+    gap: var(--space-2);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.flyover-chip {
+    white-space: nowrap;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-on-dark-muted);
+    border-radius: var(--radius-pill);
+    background: var(--color-dark-glass);
+    color: var(--color-on-dark);
+    font: 500 var(--text-xs) var(--font-text);
+    cursor: pointer;
+}
+
+.flyover-chip.is-current {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border-color: var(--color-paper);
+}
+
+@media (max-width: 40rem) {
+    .flyover-toggle {
+        display: none;
+    }
+
+    .flyover-card {
+        top: 3.75rem;
+        max-width: calc(100% - 2 * var(--space-3));
+    }
+
+    .flyover-stop {
+        bottom: 6.5rem;
+    }
+}
+
+.viewer__status {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: var(--space-6);
+    text-align: center;
+    color: var(--color-on-dark-muted);
+}
+
+.viewer__help {
+    position: absolute;
+    left: 50%;
+    bottom: 3.5rem;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-dark-glass);
+    color: var(--color-on-dark);
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+    animation: help-fade 1s 6s forwards;
+}
+
+@keyframes help-fade {
+    to {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 40rem) {
+    .viewer__help {
+        white-space: normal;
+        width: calc(100% - 2 * var(--space-4));
+        text-align: center;
+    }
+}
+
+.hole-stage__bar {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    right: var(--space-3);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    pointer-events: none;
+}
+
+.hole-stage__bar > * {
+    pointer-events: auto;
+}
+
+.stage-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    justify-content: center;
+    padding: 0 var(--space-3);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--color-dark-glass);
+    color: var(--color-on-dark);
+    font: 500 var(--text-sm) var(--font-text);
+    text-decoration: none;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+}
+
+.stage-button:hover {
+    color: var(--color-on-dark);
+    background: var(--color-ink);
+}
+
+.stage-button__text {
+    max-width: 14rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 40rem) {
+    .stage-button__text {
+        display: none;
+    }
+}
+
+.mode-switch {
+    display: inline-flex;
+    padding: 3px;
+    border-radius: var(--radius-pill);
+    background: var(--color-dark-glass);
+    backdrop-filter: blur(8px);
+}
+
+.mode-switch__option {
+    border: 0;
+    border-radius: var(--radius-pill);
+    padding: var(--space-2) var(--space-4);
+    background: transparent;
+    color: var(--color-on-dark-muted);
+    font: 600 var(--text-sm) var(--font-text);
+    cursor: pointer;
+}
+
+.mode-switch__option.is-active {
+    background: var(--color-paper);
+    color: var(--color-ink);
+}
+
+.mode-switch__option:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+/* Photo Sphere Viewer an die Marke anpassen */
+.viewer .psv-navbar {
+    background: var(--color-dark-glass);
+    font-family: var(--font-text);
+}
+
+.viewer .psv-caption {
+    font-family: var(--font-text);
+}
+
+.viewer .psv-loader {
+    color: var(--color-signal);
+}
+
+.psv-tooltip {
+    background: var(--color-ink) !important;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-float);
+    max-width: 18rem;
+}
+
+.psv-virtual-tour-tooltip h3 {
+    font-family: var(--font-text);
+    font-size: var(--text-sm);
+    margin: 0;
+}
+
+/* ---------- Messmarken (Marker im Panorama) ---------- */
+.mark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
+}
+
+.mark__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.25em 0.55em;
+    border-radius: var(--radius-pill);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font: 500 0.75rem / 1 var(--font-num);
+    white-space: nowrap;
+}
+
+.mark__stem {
+    width: 1px;
+    height: 1.25rem;
+    background: var(--color-paper);
+}
+
+.mark__dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--color-signal);
+    border: 2px solid var(--color-paper);
+}
+
+.mark--tree .mark__tag,
+.mark--tree_group .mark__tag {
+    color: var(--color-tree);
+}
+
+.mark--water .mark__tag {
+    color: var(--color-water);
+}
+
+.mark--green .mark__tag {
+    background: var(--color-signal);
+    color: var(--color-paper);
+}
+
+.mark:hover .mark__tag {
+    background: var(--color-ink);
+    color: var(--color-paper);
+}
+
+.mark-tooltip p {
+    margin: 0 0 0.2em;
+    font-size: var(--text-sm);
+    color: var(--color-on-dark);
+}
+
+.mark-tooltip__type {
+    font-size: var(--text-xs) !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-on-dark-muted) !important;
+}
+
+.mark-tooltip__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg) !important;
+}
+
+/* ---------- Seitenpanel ---------- */
+.hole-panel__title {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-2);
+}
+
+.hole-panel__description {
+    color: var(--color-ink-muted);
+}
+
+.panel-section {
+    margin-top: var(--space-8);
+}
+
+.panel-label {
+    font: 600 var(--text-xs) var(--font-text);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    margin: 0 0 var(--space-3);
+    padding: 0;
+}
+
+.panel-hint {
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+    margin-top: var(--space-2);
+}
+
+.tee-picker fieldset {
+    border: 0;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+}
+
+.tee-picker__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.tee-picker__option input {
+    position: absolute;
+    opacity: 0;
+}
+
+.tee-picker__option > span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    cursor: pointer;
+}
+
+.tee-picker__option input:checked + span {
+    border-color: var(--color-ink);
+    box-shadow: inset 0 0 0 1px var(--color-ink);
+}
+
+.tee-picker__option input:focus-visible + span {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+}
+
+/* Distanzband: Abschlag ── 182 m ── Eiche ── … ── Grün */
+.distance-band {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 var(--space-4);
+    border-left: 2px solid var(--color-ink);
+}
+
+.distance-band__stop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    font-size: var(--text-sm);
+    padding: var(--space-1) 0;
+}
+
+.distance-band__stop::before {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--space-4) - 6px);
+    top: 0.7em;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-surface);
+    border: 2px solid var(--color-ink);
+}
+
+.distance-band__stop--green::before {
+    background: var(--color-signal);
+    border-color: var(--color-signal);
+}
+
+.distance-band__name {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.distance-band__total {
+    color: var(--color-ink-muted);
+}
+
+.distance-band__segment {
+    font-size: var(--text-xs);
+    color: var(--color-signal);
+    padding: var(--space-1) 0;
+}
+
+/* Hindernisliste */
+.hazard-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+}
+
+.hazard {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    transition: background-color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+
+.hazard.is-highlighted {
+    background: var(--color-highlight);
+    border-color: var(--color-signal);
+}
+
+.hazard__icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--color-paper);
+    color: var(--color-ink);
+}
+
+.hazard__icon--tree { color: var(--color-tree); }
+.hazard__icon--water { color: var(--color-water); }
+.hazard__icon--bunker { background: var(--color-sand-soft); }
+
+.hazard__body p {
+    margin: 0 0 var(--space-1);
+    font-size: var(--text-sm);
+}
+
+.hazard__title {
+    font-weight: 600;
+    font-size: var(--text-md) !important;
+}
+
+.hazard__type {
+    font-weight: 400;
+    color: var(--color-ink-muted);
+    font-size: var(--text-xs);
+    margin-left: var(--space-1);
+}
+
+.hazard__meta,
+.hazard__description {
+    color: var(--color-ink-muted);
+}
+
+.hole-pager {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+}
+
+/* ---------- Spielplan, Bag-Hinweise, Notiz (Vorteile mit Konto) ---------- */
+.game-plan {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+}
+
+.game-plan__step {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr auto;
+    gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--color-brand-soft);
+    font-size: var(--text-sm);
+}
+
+.game-plan__shot {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--color-brand);
+    color: var(--color-on-dark);
+    font-size: var(--text-xs);
+}
+
+.game-plan__rest {
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+}
+
+.hazard__bag {
+    display: inline-block;
+    margin: 0 0 var(--space-1);
+    padding: 0.15em 0.5em;
+    border-radius: var(--radius-sm);
+    background: var(--color-brand-soft);
+    color: var(--color-brand);
+    font-size: var(--text-xs) !important;
+    font-weight: 600;
+}
+
+.hazard__bag--risk {
+    background: var(--color-highlight);
+    color: var(--color-danger);
+}
+
+.note-field {
+    width: 100%;
+    padding: var(--space-3);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-md);
+    font: var(--text-sm) / 1.5 var(--font-text);
+    resize: vertical;
+    background: var(--color-surface-2);
+}
+
+.note-field:focus {
+    outline: none;
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 3px var(--color-brand-soft);
+}
+
+.note-status {
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--color-success);
+}

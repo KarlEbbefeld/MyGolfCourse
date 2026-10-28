@@ -1,0 +1,12 @@
+Demo-Medien für den Demoplatz (werden NICHT in Git gespeichert, nur hochgeladen).
+
+Überflug für eine Bahn:  bahn-<Nummer>.mp4   z. B. bahn-1.mp4
+Vorschaubild (optional): bahn-<Nummer>.jpg   z. B. bahn-1.jpg
+
+Achtung Windows: Dateiendungen sind oft ausgeblendet. Beim Umbenennen nur "bahn-1" eintippen,
+sonst entsteht "bahn-1.mp4.mp4" und das Video wird keiner Bahn zugeordnet.
+
+Hochladen:  & .\scripts\hostinger\upload-media.cmd
+
+Empfehlung fürs Web: MP4 (H.264), 1080p, ohne Ton, möglichst unter 100 MB.
+Nur eigene Aufnahmen oder Material mit passender Lizenz verwenden.

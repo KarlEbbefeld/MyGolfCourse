@@ -1,0 +1,117 @@
+/*
+ * Design-Tokens – einzige Stelle für Farben, Schriften, Abstände und Radien.
+ * Stil: modern, ruhig, seriös. Tiefes Grün als Marke, warmes Off-White, Signalrot nur für Messmarken.
+ */
+@font-face {
+    font-family: "Instrument Sans";
+    src: url("../fonts/instrument-sans-var.woff2") format("woff2");
+    font-weight: 400 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "IBM Plex Mono";
+    src: url("../fonts/ibm-plex-mono-500.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    /* Flächen */
+    --color-paper: #f6f6f3;
+    --color-surface: #ffffff;
+    --color-surface-2: #fbfbf9;
+    --color-ink: #0e1311;
+    --color-ink-2: #2a312d;
+    --color-ink-muted: #5a615d;
+    --color-line: #e4e4de;
+    --color-line-strong: #cfcfc7;
+
+    /* Marke */
+    --color-brand: #12372b;
+    --color-brand-hover: #1b4a3a;
+    --color-brand-soft: #e6eee9;
+    --color-brand-deep: #0b2219;
+    --color-gold: #b8955a;
+    --color-signal: #e4572e;
+
+    /* Inhalte */
+    --color-sand: #d8c8a4;
+    --color-sand-soft: #f1ead9;
+    --color-water: #3e6e8e;
+    --color-tree: #3d6a32;
+    --color-danger: #b4322a;
+    --color-success: #1f6b45;
+
+    /* Auf dunklem Grund */
+    --color-on-dark: #f6f6f3;
+    --color-on-dark-muted: rgb(246 246 243 / 0.72);
+    --color-on-dark-line: rgb(246 246 243 / 0.16);
+    --color-dark-glass: rgb(14 19 17 / 0.72);
+    --color-scrim: rgb(11 34 25 / 0.78);
+    --color-highlight: #fbefe9;
+
+    /* Abschlagfarben */
+    --tee-white: #ffffff;
+    --tee-yellow: #f2c230;
+    --tee-blue: #2f6db3;
+    --tee-red: #d0362b;
+    --tee-orange: #ec8a2f;
+    --tee-black: #1c1f1d;
+    --tee-green: #3d8b4f;
+    --tee-other: #9a9a9a;
+
+    /* Schrift */
+    --font-display: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-text: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+
+    --text-xs: 0.8125rem;
+    --text-sm: 0.875rem;
+    --text-md: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.375rem;
+    --text-2xl: clamp(1.625rem, 1.25rem + 1.4vw, 2.25rem);
+    --text-3xl: clamp(2.125rem, 1.4rem + 2.8vw, 3.5rem);
+    --text-hero: clamp(2.5rem, 1.4rem + 4.6vw, 5.25rem);
+
+    /* Abstände */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-section: clamp(3.5rem, 2rem + 5vw, 7rem);
+    --gutter: clamp(1rem, 0.4rem + 2.8vw, 3.5rem);
+    --content-width: 76rem;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+
+    --shadow-sm: 0 1px 2px rgb(14 19 17 / 0.06);
+    --shadow-card: 0 1px 2px rgb(14 19 17 / 0.05), 0 12px 32px -12px rgb(14 19 17 / 0.14);
+    --shadow-float: 0 18px 48px -16px rgb(14 19 17 / 0.35);
+
+    --duration: 220ms;
+    --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    --header-height: 5rem;
+    --strip-height: 3.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --duration: 0ms;
+    }
+}

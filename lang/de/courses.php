@@ -1,0 +1,62 @@
+<?php
+
+return [
+    'index' => [
+        'title' => 'Golfplätze',
+        'intro' => 'Wähle einen Platz und erkunde jede Bahn – vom Abschlag bis zum Grün.',
+        'search' => 'Platz, Ort oder Club',
+        'search_button' => 'Suchen',
+        'all_regions' => 'Alle Regionen',
+        'all_holes' => 'Alle Platzgrößen',
+        'holes_option' => ':count Löcher',
+        'empty' => 'Keine Plätze gefunden. Versuch es mit einem anderen Ort oder ohne Filter.',
+        'reset' => 'Filter zurücksetzen',
+        'count' => '{1} 1 Platz|[2,*] :count Plätze',
+    ],
+    'card' => [
+        'holes' => ':count Bahnen',
+        'par' => 'Par :par',
+        'demo' => 'Demo',
+    ],
+    'show' => [
+        'explore' => 'Bahn 1 erkunden',
+        'scorecard' => 'Scorecard',
+        'scorecard_hint' => 'Wähle eine Bahn, um sie zu erkunden.',
+        'hole' => 'Bahn',
+        'par' => 'Par',
+        'hcp' => 'HCP',
+        'total' => 'Gesamt',
+        'about' => 'Über den Platz',
+        'contact' => 'Kontakt',
+        'website' => 'Website des Clubs',
+        'captured' => 'Aufgenommen im :date',
+        'not_captured' => 'Noch keine Aufnahmen – Platzhalteransicht',
+        'rating' => 'CR :rating · Slope :slope',
+    ],
+    'facts' => [
+        'holes' => ':count Bahnen',
+        'par' => 'Par :par',
+        'length' => ':length m',
+    ],
+    'status' => [
+        'draft' => 'Entwurf',
+        'published' => 'Veröffentlicht',
+        'archived' => 'Archiviert',
+    ],
+    'tee_colors' => [
+        'white' => 'Weiß',
+        'yellow' => 'Gelb',
+        'blue' => 'Blau',
+        'red' => 'Rot',
+        'orange' => 'Orange',
+        'black' => 'Schwarz',
+        'green' => 'Grün',
+        'other' => 'Sonstige',
+    ],
+    'dogleg' => [
+        'none' => 'Gerade',
+        'left' => 'Dogleg links',
+        'right' => 'Dogleg rechts',
+        'double' => 'Doppel-Dogleg',
+    ],
+];

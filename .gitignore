@@ -1,0 +1,59 @@
+# Umgebung / Geheimnisse
+.env
+.env.*
+!.env.example
+/auth.json
+
+# Abhängigkeiten und Builds
+/vendor/
+/node_modules/
+/public/build/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+
+# Datenbanken und Dumps
+*.sql
+*.sqlite
+*.sqlite-journal
+
+# Medien gehören nicht ins Repository (Bunny / Archiv)
+/media-raw/
+/tools/media/out/
+*.mp4
+*.mov
+*.MP4
+*.MOV
+*.SRT
+*.dng
+*.DNG
+*.insv
+
+# Tests und Caches
+*.log
+.phpunit.result.cache
+/.phpunit.cache
+/playwright-report/
+/test-results/
+
+# Editor / Betriebssystem
+.DS_Store
+Thumbs.db
+/.idea
+/.fleet
+/.zed
+/.vscode/*
+!/.vscode/extensions.json
+!/.vscode/settings.json
+
+# Lokale Agenten-/Toolkonfiguration
+/.claude/settings.local.json
+/.codex
+/.cursor/
+_ide_helper.php
+.phpactor.json
+
+# Demo-Medien nur hochladen, nicht in Git (scripts/hostinger/upload-media.cmd)
+/public/media/demo/*
+!/public/media/demo/LIESMICH.txt
